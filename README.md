@@ -1,15 +1,22 @@
 # genai-selenium-java-framework
 
-This repo provides a fully modular, production-ready Selenium + Java QA automation framework that:
+Production-ready Selenium + Java QA automation framework (sample).
+- Maven, TestNG, SLF4J + Log4j2, Allure
+- Page Object Model, RetryAnalyzer, TestListener (screenshots + stacktrace)
+- Docker + docker-compose with selenium/standalone-chrome
+- GitHub Actions and Jenkinsfile examples
 
-Accepts user stories / acceptance criteria and generates full end-to-end tests (POM, locators, fixtures, test data).
+## Quick commands
 
-Uses Maven, TestNG, SLF4J + Log4j2, Allure reporting, and supports parallel execution, retries, explicit waits, and flaky detection.
+```bash
+mvn -Dbase.url=https://demo-ecommerce.example -Dselenium.grid.url=http://localhost:4444 test
 
-Integrates with CI/CD (GitHub Actions + Jenkins examples), builds Docker images, and executes tests inside Docker containers connected to a Selenium Grid (or standalone Chrome).
+# build Docker test-runner
+mvn -DskipTests clean package
+docker build -t genai-tests -f docker/Dockerfile.test-runner .
 
-Produces traceable mapping: story → test cases → assertions (JSON/Markdown mapping file auto-generated per story)
+docker-compose up --build
 
-Provides logs collection (file-based) and an optional ELK snippet (commented) for teams that want centralized logging.
-
-Extension points for custom drivers, assertions, pages.
+# generate Allure report
+allure generate target/allure-results -o target/allure-report --clean
+```
